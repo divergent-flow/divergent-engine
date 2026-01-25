@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "vZHIYJoYsn8=",
+  "success": true,
+  "projectFilePath": "/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/DivergentEngine.Core.csproj",
+  "expectedPackageFiles": [
+    "/Users/johnnygibson/.nuget/packages/mongodb.bson/3.6.0/mongodb.bson.3.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}
