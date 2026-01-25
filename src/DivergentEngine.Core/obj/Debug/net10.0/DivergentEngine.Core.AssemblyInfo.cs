@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DivergentEngine.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2ac30a24f0cd956a6af7e00546a683ac9494f51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b5faa332a056f2e1c4afd9b6598c837d12be0fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("DivergentEngine.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DivergentEngine.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
