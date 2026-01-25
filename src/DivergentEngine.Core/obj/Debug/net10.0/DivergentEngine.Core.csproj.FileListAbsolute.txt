@@ -1,0 +1,13 @@
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/bin/Debug/net10.0/DivergentEngine.Core.deps.json
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/bin/Debug/net10.0/DivergentEngine.Core.dll
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/bin/Debug/net10.0/DivergentEngine.Core.pdb
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.csproj.AssemblyReference.cache
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.AssemblyInfoInputs.cache
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.AssemblyInfo.cs
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.csproj.CoreCompileInputs.cache
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.sourcelink.json
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.dll
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/refint/DivergentEngine.Core.dll
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/DivergentEngine.Core.pdb
+/Users/johnnygibson/code/divergent-flow-mvp/backend/modules/divergent-engine/src/DivergentEngine.Core/obj/Debug/net10.0/ref/DivergentEngine.Core.dll
