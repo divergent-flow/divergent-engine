@@ -143,3 +143,4 @@ bin/
 obj/
 **/bin/
 **/obj/
+appsettings.json
