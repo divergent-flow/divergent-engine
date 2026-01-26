@@ -179,7 +179,7 @@ refactor(core): extract IEntityRepository interface
   - Methods: `PascalCase`
   - Private fields: `_camelCase`
   - Parameters: `camelCase`
-  - Constants: `UPPER_SNAKE_CASE`
+  - Constants: `PascalCase`
 
 ### Testing Requirements
 - **Unit Tests**: Required for all new business logic
