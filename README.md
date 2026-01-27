@@ -16,12 +16,42 @@ We are building on the absolute bleeding edge. High performance, low latency.
 * **API:** REST + OpenAPI (Swagger)
 
 ## 🏗 Architecture
+
+### Universal Entity Engine (UEE)
+The UEE is the cornerstone of Divergent Engine. Instead of creating separate tables/collections for tasks, notes, collections, and other content types, everything is represented as a flexible **Entity** with:
+
+* **Type-based Schema**: `EntityType` definitions act as templates, defining what attributes each entity type can have
+* **Dynamic Attributes**: A key-value store allowing entities to have flexible, schema-validated properties
+* **Relationships**: First-class support for entity relationships (parent/child, collections, links)
+* **Multi-tenancy**: Built-in tenant isolation for security and team workspaces
+
+#### Core Entity Model
+```csharp
+Entity
+├── Id (GUID - stable public identifier)
+├── EntityTypeId (e.g., "task", "note", "collection")
+├── TenantId (data isolation boundary)
+├── OwnerId (creator/owner)
+├── Attributes (flexible key-value data)
+├── Metadata (created, modified timestamps)
+└── Relationships (links to other entities)
+```
+
+### Clean Architecture Layers
 We follow a strict **Clean Architecture** approach to keep the core logic independent of frameworks and UI.
 
-* `DivergentFlow.Domain`: Pure business logic and entities. No dependencies.
-* `DivergentFlow.Application`: Use cases, CQRS handlers, and interfaces.
-* `DivergentFlow.Infrastructure`: Implementation of interfaces (Mongo, Redis, Auth0).
-* `DivergentFlow.Api`: The entry point.
+* **`DivergentEngine.Core`**: Pure domain models (Entity, EntityType, etc.). No external dependencies except MongoDB.Bson for serialization attributes.
+* **`DivergentFlow.Application`** *(Future)*: Use cases, CQRS handlers, and interfaces.
+* **`DivergentFlow.Infrastructure`** *(Future)*: Implementation of interfaces (Mongo repositories, Redis caching, Auth0).
+* **`DivergentFlow.Api`** *(Future)*: The API entry point.
+
+### Interface Extraction Goals
+To maintain a clean domain layer, we are committed to:
+
+1. **Minimizing Framework Dependencies**: The Core domain should have minimal external dependencies. Currently uses `MongoDB.Bson` for serialization - future work may extract this behind interfaces.
+2. **Repository Pattern**: All data access will be abstracted behind repository interfaces defined in the Application layer.
+3. **Dependency Inversion**: Infrastructure depends on Application/Core, never the reverse.
+4. **Testability**: Pure domain logic should be testable without infrastructure concerns.
 
 ## 🤝 Contributing & Retroactive Bounties
 We are bootstrapping this as a community of engineers.

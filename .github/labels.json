@@ -1,0 +1,112 @@
+[
+  {
+    "name": "bounty:tier-1",
+    "color": "0E8A16",
+    "description": "Bounty: $50-$100 - Small bug fixes, documentation, minor refactoring"
+  },
+  {
+    "name": "bounty:tier-2",
+    "color": "1D76DB",
+    "description": "Bounty: $100-$250 - Medium features, architectural improvements"
+  },
+  {
+    "name": "bounty:tier-3",
+    "color": "5319E7",
+    "description": "Bounty: $250-$500 - Major features, complex refactoring, performance work"
+  },
+  {
+    "name": "bounty:premium",
+    "color": "B60205",
+    "description": "Bounty: $500+ - Large-scale features, critical infrastructure, security"
+  },
+  {
+    "name": "bounty:claimed",
+    "color": "FBCA04",
+    "description": "This bounty issue has been claimed by a contributor"
+  },
+  {
+    "name": "bounty:in-review",
+    "color": "D4C5F9",
+    "description": "Bounty PR is under review"
+  },
+  {
+    "name": "bounty:paid",
+    "color": "0E8A16",
+    "description": "Bounty has been paid out to the contributor"
+  },
+  {
+    "name": "bug",
+    "color": "D73A4A",
+    "description": "Something isn't working"
+  },
+  {
+    "name": "enhancement",
+    "color": "A2EEEF",
+    "description": "New feature or request"
+  },
+  {
+    "name": "documentation",
+    "color": "0075CA",
+    "description": "Improvements or additions to documentation"
+  },
+  {
+    "name": "security",
+    "color": "B60205",
+    "description": "Security vulnerability or security-related issue"
+  },
+  {
+    "name": "performance",
+    "color": "FFA500",
+    "description": "Performance optimization"
+  },
+  {
+    "name": "architecture",
+    "color": "5319E7",
+    "description": "Architectural improvement or design decision"
+  },
+  {
+    "name": "needs-triage",
+    "color": "EDEDED",
+    "description": "Needs initial assessment and prioritization"
+  },
+  {
+    "name": "good-first-issue",
+    "color": "7057FF",
+    "description": "Good for newcomers"
+  },
+  {
+    "name": "help-wanted",
+    "color": "008672",
+    "description": "Extra attention is needed"
+  },
+  {
+    "name": "wontfix",
+    "color": "FFFFFF",
+    "description": "This will not be worked on"
+  },
+  {
+    "name": "duplicate",
+    "color": "CFD3D7",
+    "description": "This issue or pull request already exists"
+  },
+  {
+    "name": "invalid",
+    "color": "E4E669",
+    "description": "This doesn't seem right"
+  },
+  {
+    "name": "question",
+    "color": "D876E3",
+    "description": "Further information is requested"
+  },
+  {
+    "name": "breaking-change",
+    "color": "B60205",
+    "description": "This PR introduces breaking changes"
+  },
+  {
+    "name": "dependencies",
+    "color": "0366D6",
+    "description": "Pull requests that update a dependency file"
+  }
+]
