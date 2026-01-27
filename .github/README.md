@@ -5,20 +5,24 @@ This directory contains GitHub-specific configuration files for issue tracking, 
 ## 📂 Contents
 
 ### Issue Templates (`ISSUE_TEMPLATE/`)
+
 - **`bounty-issue.md`**: Template for submitting bounty-eligible issues with tier classification
 - **`bug-report.md`**: Template for reporting bugs and unexpected behavior
 - **`feature-request.md`**: Template for proposing new features or enhancements
 - **`config.yml`**: Configuration for issue template behavior
 
 ### Pull Request Template
+
 - **`PULL_REQUEST_TEMPLATE.md`**: Comprehensive PR template with Definition of Done checklist
 
 ### Labels
+
 - **`labels.json`**: Label definitions for the project, including bounty tiers
 
 ## 🏷️ Label Schema
 
 ### Bounty Labels
+
 The bounty tier system is designed to incentivize contributions:
 
 | Label | Value Range | Color | Use Case |
@@ -29,11 +33,13 @@ The bounty tier system is designed to incentivize contributions:
 | `bounty:premium` | $500+ | Red | Large-scale features, critical infrastructure, security |
 
 ### Bounty Status Labels
+
 - `bounty:claimed`: Issue has been claimed by a contributor
 - `bounty:in-review`: PR is under review
 - `bounty:paid`: Bounty has been paid out
 
 ### Standard Labels
+
 - `bug`: Something isn't working
 - `enhancement`: New feature or request
 - `documentation`: Documentation improvements
@@ -46,46 +52,10 @@ The bounty tier system is designed to incentivize contributions:
 
 ## 🚀 Applying Labels (for Maintainers)
 
-### Using GitHub CLI
-To sync labels from the JSON file to your repository:
-
-```bash
-# Install GitHub CLI if not already installed
-# https://cli.github.com/
-
-# Authenticate
-gh auth login
-
-# Apply labels (requires a script or manual creation)
-# GitHub CLI doesn't directly support label import from JSON
-# Use the GitHub API or web interface to create labels
-```
-
-### Using GitHub API
-```bash
-# Create labels from labels.json
-cat .github/labels.json | jq -c '.[]' | while read -r label; do
-  name=$(echo $label | jq -r '.name')
-  color=$(echo $label | jq -r '.color')
-  description=$(echo $label | jq -r '.description')
-  
-  gh api repos/{owner}/{repo}/labels \
-    -f name="$name" \
-    -f color="$color" \
-    -f description="$description"
-done
-```
-
-### Manual Creation
-1. Go to: https://github.com/divergent-flow/divergent-engine/labels
-2. Click "New label"
-3. Copy name, color, and description from `labels.json`
-4. Repeat for all labels
-
-## 📝 Issue Template Usage
-
 ### For Contributors
+
 When creating a new issue:
+
 1. Click "New Issue" in the repository
 2. Select the appropriate template:
    - **Bounty Issue**: For work you want bounty-tagged
@@ -95,17 +65,21 @@ When creating a new issue:
 4. Submit and wait for maintainer triage
 
 ### For Maintainers
+
 When triaging issues:
+
 1. Review the issue for completeness
 2. Apply appropriate labels (bounty tier, type, priority)
 3. Assign if a contributor has claimed it
 4. Add to project board if applicable
-5. Remove `needs-triage` label once processed
+5. Remove `needs triage` label once processed
 
 ## 🔄 PR Template Usage
 
 ### For Contributors
+
 When creating a pull request:
+
 1. The PR template will auto-populate
 2. Fill out all sections, especially:
    - **Definition of Done Checklist**: Complete all applicable items
@@ -115,7 +89,9 @@ When creating a pull request:
 4. Request review from maintainers
 
 ### For Maintainers
+
 When reviewing PRs:
+
 1. Verify Definition of Done checklist is complete
 2. Review code quality and architecture
 3. Verify security checklist
@@ -126,8 +102,9 @@ When reviewing PRs:
 ## 🔒 Security
 
 For security vulnerabilities:
+
 - **DO NOT** use public issue templates
-- **Email**: security@getdivergentflow.com
+- **Email**: <security@getdivergentflow.com>
 - See [CONTRIBUTING.md](../CONTRIBUTING.md#security-guidelines) for details
 
 ## 📚 Resources
