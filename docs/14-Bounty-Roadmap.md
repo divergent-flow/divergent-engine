@@ -1,160 +1,264 @@
 # UEE Development Roadmap & Bounty List
 
-This document outlines the development tasks (bounties) required to build the **Universal Entity Engine (UEE)** based on the architecture definitions.
+This document outlines the development tasks (bounties) required to build the **Universal Entity Engine (UEE)**. It is derived from the comprehensive architecture definitions and broken down into executable units of work.
 
-## Phase 1: Core Kernel & Primitives
+## Phase 1: The Core Kernel (Domain & Primitives)
 
-The foundational building blocks for the engine.
+*The bedrock of the system. No external dependencies.*
 
-### B-001: Core Entity & Event Abstractions
+### B-01-01: Core Entity & Aggregate Roots
 
-**Goal:** Define the base interfaces and classes for the Domain.
+**Goal:** Define the base classes for the Event Sourced domain.
 **Requirements:**
 
-- Create `IEntity`, `Entity` base class.
-- Create `IEvent` interface and metadata structure (TenantId, CorrelationId, etc.).
-- Implement `AggregateRoot` pattern helpers (ApplyEvent mechanisms).
+- `IEntity`, `Entity` base class with `Id`, `Version`, `TenantId`.
+- `IAggregateRoot` interface.
+- `ApplyEvent(IEvent)` mechanism for state reconstruction.
+- Unit tests for version increments and state application.
 - **Scope:** `DivergentEngine.Core`
 
-### B-002: Result Pattern & Validation Primitives
+### B-01-02: Event Abstractions & Metadata
 
-**Goal:** Standardize operation results and validation.
+**Goal:** Standardize the event envelope.
 **Requirements:**
 
-- specific `Result<T>` class to handle Success/Failure without exceptions.
-- `Error` record type.
-- Integration with basic FluentValidation (or similar) plumbing.
-- **Scope:** `DivergentEngine.Core`
+- `IEvent` interface.
+- `EventMetadata` record (Timestamp, UserId, CorrelationId, CausalityId).
+- `DomainEvent` base class.
+- Serialization attributes (Json/Bson) configuration.
 
-## Phase 2: Event Storage & Infrastructure
+### B-01-03: Result Pattern & Validation
 
-Persisting the immutable history.
-
-### B-003: MongoDB Event Store Implementation
-
-**Goal:** Implement the append-only log.
+**Goal:** Railway-oriented programming primitives.
 **Requirements:**
 
-- Implement `IEventStore`.
-- Create MongoDB schema for `EventStreams`.
-- Implement Optimistic Concurrency Control (Version check).
+- `Result<T>` and `Result` (Success/Failure).
+- `Error` record (Code, Message).
+- `ValidationResult` extensions.
+- Reusable `ValueObject` base class.
+
+---
+
+## Phase 2: Persistence & Integrity (The Write Side)
+
+*Reliable storage of the immutable log.*
+
+### B-02-01: MongoDB Event Store & Streams
+
+**Goal:** The primary append-only storage.
+**Requirements:**
+
+- `EventStream` document schema.
+- `IEventStore` implementation.
+- Optimistic Concurrency Control (Version mismatch detection).
 - **Scope:** `DivergentEngine.Infrastructure`
 
-### B-004: Snapshotting Strategy
+### B-02-02: Transactional Outbox Implementation
 
-**Goal:** Optimize loading of long-lived entities.
+**Goal:** Ensure "At-Least-Once" delivery to the message bus.
 **Requirements:**
 
-- Implement `ISnapshotStore`.
-- Logic to create snapshots every N events.
+- `OutboxMessage` collection in MongoDB.
+- Atomicity: Save Events + Save Outbox Message in one Mongo transaction.
 - **Scope:** `DivergentEngine.Infrastructure`
 
-## Phase 3: CQRS Write Model
+### B-02-03: Snapshot Store Strategy
 
-Handling commands and business logic.
-
-### B-005: Command Dispatcher & Mediator Pipeline
-
-**Goal:** Route commands to handlers.
+**Goal:** Performance optimization for large streams.
 **Requirements:**
 
-- Implement `ICommand`, `ICommandHandler<T>`.
-- Create a Dispatcher/Mediator (or use MediatR).
-- Middleware pipeline for Logging, Validation, and Transaction management.
-- **Scope:** `DivergentEngine.Application`
+- `ISnapshotStore`.
+- `SnapshotStrategy` (e.g., every 100 events).
+- Background worker to create snapshots async (optional) or inline.
 
-### B-006: Generic Event Sourced Repository
+### B-02-04: Generic Event Sourced Repository
 
-**Goal:** Standard way to load/save entities.
+**Goal:** The application's interface to storage.
 **Requirements:**
 
-- `IRepository<T>` where T : Entity.
-- `LoadAsync(id)`: Rehydrate from EventStore.
-- `SaveAsync(entity)`: Commit uncommitted events to EventStore.
+- `IRepository<T>` interface.
+- `LoadAsync(id)`: Rehydrate from Snapshot + Events.
+- `SaveAsync(entity)`: Persist events + Outbox.
+
+---
+
+## Phase 3: The Nervous System (Event Bus & Messaging)
+
+*Moving data from Write to Read/Plugins.*
+
+### B-03-01: Redis Streams Publisher (Outbox Processor)
+
+**Goal:** Publish events to the wider system.
+**Requirements:**
+
+- Background Service (Worker) to poll/watch `OutboxMessage` collection.
+- Publish to Redis Streams (`XADD`).
+- Mark messages as processed (delete or update status).
 - **Scope:** `DivergentEngine.Infrastructure`
 
-## Phase 4: Read Models & Projections
+### B-03-02: Redis Streams Consumer Groups
 
-Converting events into queryable views.
-
-### B-007: Projection Engine (In-Memory & Persistent)
-
-**Goal:** React to events and build read models.
+**Goal:** Reliable event consumption.
 **Requirements:**
 
-- `IProjection` interface.
-- Dispatcher to route committed events to interested projections.
-- Handler for `IEvent<Created>`, `IEvent<Updated>`, etc.
-- **Scope:** `DivergentEngine.Application`
+- Abstract Consumer Host (`IStreamConsumer`).
+- Handle `XREADGROUP` for load balancing.
+- Acknowledgement (`XACK`) handling.
+- Dead Letter Queue (DLQ) logic for failed processing.
 
-### B-008: MongoDB Read Model Repository
+### B-03-03: Internal Mediator Pipeline
 
-**Goal:** Store queryable side.
+**Goal:** In-process decoupling.
 **Requirements:**
 
-- Generic Mongo Repository for ReadModels (Documents).
-- Idempotency checks.
+- MediatR (or custom) setup.
+- Behaviors: `LoggingBehavior`, `ValidationBehavior`, `PerformanceBehavior`.
+
+---
+
+## Phase 4: The Read Side (Projections & Queries)
+
+*Making data queryable.*
+
+### B-04-01: Projection Engine Core
+
+**Goal:** Framework for building read models.
+**Requirements:**
+
+- `IProjection<TModel>` interface.
+- `Project(Event)` method definitions.
+- Handling `Rebuild` vs `Live` projection modes.
+
+### B-04-02: MongoDB Read Model Repository
+
+**Goal:** Persisting views.
+**Requirements:**
+
+- Generic Repository for `ReadModel` documents.
+- Idempotent update logic (`$set` operations).
 - **Scope:** `DivergentEngine.Infrastructure`
 
-## Phase 5: API & Multitenancy
+### B-04-03: Distributed Cache (L2) Implementation
 
-The public face of the engine.
-
-### B-009: ASP.NET Core API Shell
-
-**Goal:** Host the engine.
+**Goal:** High-speed entity access.
 **Requirements:**
 
-- Setup Solution with `DivergentEngine.API`.
-- DI Container wiring.
-- Swagger/OpenAPI configuration.
+- Redis-based `IDistributedCache`.
+- Look-aside caching pattern for Read Models.
+- Cache Invalidation (evict on Event).
 
-### B-010: Multitenancy Middleware
+---
 
-**Goal:** Isolate data per tenant.
+## Phase 5: The Plugin Runtime (WASM & Extensibility)
+
+*The "Universal" part of the engine.*
+
+### B-05-01: WASM Host Integration (Wasmtime)
+
+**Goal:** Execute foreign code safely.
 **Requirements:**
 
-- Header/Token based Tenant Resolution.
-- Inject `TenantContext` into Command Handlers and Repositories.
-- Filter MongoDB queries by `TenantId`.
+- Integrate `Wasmtime` or `WasmEdge` .NET bindings.
+- Load `.wasm` files from storage/registry.
+- Simple "Hello World" execution.
 
-## Phase 6: Plugin System (WASM)
+### B-05-02: Plugin Host Functions (ABI)
 
-Extensibility without recompilation.
-
-### B-011: WASM Host Integration (Wasmtime/WasmEdge)
-
-**Goal:** Run external code.
+**Goal:** Allow plugins to talk to the Engine.
 **Requirements:**
 
-- Integrate a .NET WASM runtime (e.g., Wasmtime).
-- Define the "Host ABI" (functions exposed to plugins).
-- **Scope:** `DivergentEngine.Plugins`
+- Define Import functions: `get_entity(id)`, `save_entity(json)`, `log(msg)`.
+- Map WASM memory to .NET objects.
 
-### B-012: Plugin Registry & Loader
+### B-05-03: Plugin Event Listener
 
-**Goal:** Manage available plugins.
+**Goal:** Plugins reacting to system events.
 **Requirements:**
 
-- Store Plugin binaries (Entities).
-- Load/Unload mechanisms.
-- **Scope:** `DivergentEngine.Plugins`
+- Mechanism to route Redis Stream events -> Trigger WASM function.
+- `PluginContext` to pass event data to WASM.
 
-## Phase 7: Telemetry & Observability
+---
 
-Understanding system behavior.
+## Phase 6: API & Multitenancy Security
 
-### B-013: OpenTelemetry Tracing
+*The gateway to the world.*
 
-**Goal:** End-to-end visibility.
+### B-06-01: Tenant Resolution Middleware
+
+**Goal:** SaaS isolation.
 **Requirements:**
 
-- Trace Command -> Event -> Projection.
-- Export to Jaeger/Zipkin/Aspire.
+- Resolve Tenant via Header / JWT / Governance API.
+- `ITenantContext` accessor.
+- Logical isolation enforcement in Repositories.
 
-### B-014: Structured Logging (Serilog)
+### B-06-02: Dynamic API Controllers
 
-**Goal:** Queryable logs.
+**Goal:** Expose Entities without writing code.
 **Requirements:**
 
-- Enrich logs with TenantId, CorrelationId, UserId.
+- Generic Controller `EntityController<T>`.
+- Or dynamic routing `api/v1/{entityType}/{id}`.
+- OpenAPI (Swagger) dynamic generation.
+
+### B-06-03: Authentication & Permissions
+
+**Goal:** RBAC and Auth.
+**Requirements:**
+
+- OIDC Integration (Auth0 / IdentityServer).
+- Policy-based authorization (`CanReadEntity`, `CanExecuteCommand`).
+
+---
+
+## Phase 7: AI & Telemetry (The Brain)
+
+*Observability and Intelligence.*
+
+### B-07-01: OpenTelemetry Instrumentation
+
+**Goal:** Full system visibility.
+**Requirements:**
+
+- Traces for Command -> Event -> Bus -> Projection.
+- Metrics (Events/sec, Plugin execution time).
+
+### B-07-02: Vector Store Integration (Memory)
+
+**Goal:** Semantic search for entities.
+**Requirements:**
+
+- Connector for Qdrant or Weaviate.
+- Projection that embeds text attributes -> Vector Store.
+
+### B-07-03: AI Agent Interface (MCP)
+
+**Goal:** Allow AI to control the engine.
+**Requirements:**
+
+- Implement Model Context Protocol (MCP) server endpoints.
+- Allow AI to query Schema and Entities.
+
+---
+
+## Phase 8: Developer Experience (DevEx)
+
+*Tools for builders.*
+
+### B-08-01: CLI Tool (`uee`)
+
+**Goal:** Command line management.
+**Requirements:**
+
+- `uee init`
+- `uee plugin new`
+- `uee snapshot run`
+
+### B-08-02: C# Client SDK
+
+**Goal:** Typed access for external apps.
+**Requirements:**
+
+- SignalR Client for real-time updates.
+- HTTP Client wrapper.
