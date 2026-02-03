@@ -3,18 +3,6 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DivergentEngine.Core.Entities;
 
-public interface IEntity
-{
-    ObjectId _id { get; set; }
-    string Id { get; set; }
-    string EntityTypeId { get; set; }
-    string TenantId { get; set; }
-    string OwnerId { get; set; }
-    Dictionary<string, object> Attributes { get; set; }
-    EntityMetadata Metadata { get; set; }
-    EntityRelationships Relationships { get; set; }
-}
-
 /// <summary>
 /// Represents the universal entity model. All content types (tasks, notes, collections, etc.)
 /// are stored as entities with flexible attributes.
@@ -83,10 +71,17 @@ public class Entity : IEntity
     public Dictionary<string, object> Attributes { get; set; } = new();
 
     /// <summary>
-    /// System metadata (created date, modified date, etc.)
+    /// Version number for optimistic concurrency and event sourcing.
+    /// Incremented on every update.
     /// </summary>
-    [BsonElement("metadata")]
-    public EntityMetadata Metadata { get; set; } = new() { CreatedBy = string.Empty };
+    [BsonElement("version")]
+    public int Version { get; set; } = 1;
+
+    /// <summary>
+    /// When the entity was created (UTC).
+    /// </summary>
+    [BsonElement("createdAt")]
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Relationships to other entities (collections, parent/child, links, etc.)
