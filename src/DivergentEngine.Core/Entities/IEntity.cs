@@ -1,4 +1,6 @@
 using System;
+using MongoDB.Bson;
+
 namespace DivergentEngine.Core.Entities;
 public interface IEntity : IEntityRelationships
 {

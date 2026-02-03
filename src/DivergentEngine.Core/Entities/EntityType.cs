@@ -102,6 +102,12 @@ public class EntityType
     public bool IsActive { get; set; } = true;
 
     /// <summary>
+    /// Legacy metadata container.
+    /// </summary>
+    [BsonElement("metadata")]
+    public EntityMetadata Metadata { get; set; } = new();
+
+    /// <summary>
     /// Version number.
     /// </summary>
     [BsonElement("version")]

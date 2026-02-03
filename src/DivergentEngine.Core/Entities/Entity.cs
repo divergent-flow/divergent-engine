@@ -71,6 +71,12 @@ public class Entity : IEntity
     public Dictionary<string, object> Attributes { get; set; } = new();
 
     /// <summary>
+    /// Legacy metadata container.
+    /// </summary>
+    [BsonElement("metadata")]
+    public EntityMetadata Metadata { get; set; } = new();
+
+    /// <summary>
     /// Version number for optimistic concurrency and event sourcing.
     /// Incremented on every update.
     /// </summary>
@@ -88,4 +94,48 @@ public class Entity : IEntity
     /// </summary>
     [BsonElement("relationships")]
     public EntityRelationships Relationships { get; set; } = new();
+
+    // IEntity Implementation
+    string IEntity.EntityId 
+    { 
+        get => Id; 
+        set => Id = value; 
+    }
+    
+    DateTime IEntity.Created 
+    { 
+        get => CreatedAt; 
+        set => CreatedAt = value; 
+    }
+
+    // IEntityRelationships Implementation
+    List<string> IEntityRelationships.CollectionIds 
+    { 
+        get => Relationships.CollectionIds; 
+        set => Relationships.CollectionIds = value; 
+    }
+
+    string? IEntityRelationships.ParentEntityId 
+    { 
+        get => Relationships.ParentEntityId; 
+        set => Relationships.ParentEntityId = value; 
+    }
+
+    List<string> IEntityRelationships.ChildEntityIds 
+    { 
+        get => Relationships.ChildEntityIds; 
+        set => Relationships.ChildEntityIds = value; 
+    }
+
+    List<string> IEntityRelationships.LinkedEntityIds 
+    { 
+        get => Relationships.LinkedEntityIds; 
+        set => Relationships.LinkedEntityIds = value; 
+    }
+
+    List<string> IEntityRelationships.Tags 
+    { 
+        get => Relationships.Tags; 
+        set => Relationships.Tags = value; 
+    }
 }
