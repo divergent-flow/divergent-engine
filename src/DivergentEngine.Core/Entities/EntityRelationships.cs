@@ -5,7 +5,7 @@ namespace DivergentEngine.Core.Entities;
 /// <summary>
 /// Defines relationships between entities. Supports collections, hierarchies, and links.
 /// </summary>
-public class EntityRelationships
+public class EntityRelationships : IEntityRelationships
 {
     /// <summary>
     /// Collections this entity belongs to. Many-to-many relationship.

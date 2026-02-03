@@ -102,8 +102,20 @@ public class EntityType
     public bool IsActive { get; set; } = true;
 
     /// <summary>
-    /// System metadata.
+    /// Legacy metadata container.
     /// </summary>
     [BsonElement("metadata")]
-    public EntityMetadata Metadata { get; set; } = new() { CreatedBy = string.Empty };
+    public EntityMetadata Metadata { get; set; } = new();
+
+    /// <summary>
+    /// Version number.
+    /// </summary>
+    [BsonElement("version")]
+    public int Version { get; set; } = 1;
+
+    /// <summary>
+    /// Creation timestamp (UTC).
+    /// </summary>
+    [BsonElement("createdAt")]
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
