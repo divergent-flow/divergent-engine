@@ -9,6 +9,6 @@ public interface IEntity : IEntityRelationships
     string OwnerId { get; set; }
     Dictionary<string, object> Attributes { get; set; }
     int Version { get; set; }
-    DateTime CreatedAt { get; set; }
+    DateTime Created { get; set; }
    
 }
