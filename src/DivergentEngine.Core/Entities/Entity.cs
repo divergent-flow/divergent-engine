@@ -3,6 +3,18 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DivergentEngine.Core.Entities;
 
+public interface IEntity
+{
+    ObjectId _id { get; set; }
+    string Id { get; set; }
+    string EntityTypeId { get; set; }
+    string TenantId { get; set; }
+    string OwnerId { get; set; }
+    Dictionary<string, object> Attributes { get; set; }
+    EntityMetadata Metadata { get; set; }
+    EntityRelationships Relationships { get; set; }
+}
+
 /// <summary>
 /// Represents the universal entity model. All content types (tasks, notes, collections, etc.)
 /// are stored as entities with flexible attributes.
@@ -12,7 +24,7 @@ namespace DivergentEngine.Core.Entities;
 /// tasks, notes, reminders, etc., everything is an entity with a type and dynamic attributes.
 /// See docs/ENTITY-ENGINE-VISION.md for design rationale.
 /// </remarks>
-public class Entity
+public class Entity : IEntity
 {
     /// <summary>
     /// MongoDB internal primary key. Used for database-level operations and indexing.
