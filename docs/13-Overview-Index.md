@@ -1,15 +1,17 @@
-# Filename: 13-Overview-Index.md
 # Universal Entity Engine (UEE)
+
 ## Documentation Index & Navigation  
+
 ### Audience: AI Agents • Developers • Architects • Non‑Technical Readers
 
 ---
 
-# 📚 1. Introduction
+## 📚 1. Introduction
 
 This file serves as the **master index** for the Universal Entity Engine (UEE) Documentation Suite.
 
 It provides:
+
 - A consolidated table of contents  
 - Descriptions of each document  
 - Suggested reading order  
@@ -17,20 +19,23 @@ It provides:
 - A mental map of how all concepts interconnect  
 
 This index is intended to be used by:
+
 - **Human developers**, as documentation navigation  
 - **AI agents**, as a memory anchor and discovery point  
 - **Non‑technical stakeholders**, as a high-level guide to the system  
 
 ---
 
-# 📘 2. Documentation Suite Index
+## 📘 2. Documentation Suite Index
 
 Below is a list of all documentation files in the UEE suite, with brief descriptions.
 
 ---
 
-## **00‑Overview.md — Universal Introduction**
+### **00‑Overview.md — Universal Introduction**
+
 A conceptual overview of the UEE:
+
 - What it is  
 - Why it exists  
 - Core philosophy  
@@ -40,8 +45,10 @@ Ideal starting point for all readers.
 
 ---
 
-## **01‑Architecture.md — System Architecture**
+### **01‑Architecture.md — System Architecture**
+
 Describes:
+
 - API layer  
 - Event store  
 - Redis Streams  
@@ -54,8 +61,10 @@ This defines the structural backbone of UEE.
 
 ---
 
-## **02‑Entities.md — Entity Model Specification**
+### **02‑Entities.md — Entity Model Specification**
+
 Explains everything about:
+
 - Entities  
 - EntityTypes  
 - Versioning  
@@ -67,8 +76,10 @@ The core data model of UEE.
 
 ---
 
-## **03‑EventSourcing.md — Event Store & Write Model**
+### **03‑EventSourcing.md — Event Store & Write Model**
+
 Covers:
+
 - Event envelope  
 - Mongo event store  
 - Outbox  
@@ -80,8 +91,10 @@ This document is essential for understanding data correctness.
 
 ---
 
-## **04‑ReadModels.md — Projections & Query Model**
+### **04‑ReadModels.md — Projections & Query Model**
+
 Describes:
+
 - Materialized views  
 - Projection workers  
 - Read model storage  
@@ -92,8 +105,10 @@ Read models are how UEE expresses “current state”.
 
 ---
 
-## **05‑Multitenancy.md — Tenant & User Isolation**
+### **05‑Multitenancy.md — Tenant & User Isolation**
+
 Explains:
+
 - tenantId  
 - ownerId  
 - visibility rules  
@@ -105,8 +120,10 @@ Critical for SaaS‑scale deployments.
 
 ---
 
-## **06‑Plugins.md — WASM & Native Extensions**
+### **06‑Plugins.md — WASM & Native Extensions**
+
 Details:
+
 - Plugin architecture  
 - Permissions  
 - Capabilities  
@@ -119,8 +136,10 @@ Defines how intelligence is added to UEE.
 
 ---
 
-## **07‑API.md — Commands, Queries, and Endpoints**
+### **07‑API.md — Commands, Queries, and Endpoints**
+
 Describes the full UEE API surface:
+
 - Commands  
 - Queries  
 - Views  
@@ -132,8 +151,10 @@ Designed for both humans and AI agents.
 
 ---
 
-## **08‑Telemetry.md — Behavioral and System Observability**
+### **08‑Telemetry.md — Behavioral and System Observability**
+
 Covers:
+
 - Telemetry envelopes  
 - Behavioral signals  
 - Feature extraction  
@@ -145,8 +166,10 @@ Telemetry is the lifeblood of UEE.
 
 ---
 
-## **09‑DomainExamples.md — Practical Application Examples**
+### **09‑DomainExamples.md — Practical Application Examples**
+
 Includes worked examples for:
+
 - DivFlo  
 - CRM Lite  
 - Energy Tracker  
@@ -158,8 +181,10 @@ Shows how to build apps on UEE.
 
 ---
 
-## **10‑Scalability.md — From Startup to Planet-Scale**
+### **10‑Scalability.md — From Startup to Planet-Scale**
+
 Explains:
+
 - API horizontal scaling  
 - Event stream sharding  
 - Projection pools  
@@ -171,8 +196,10 @@ Defines UEE’s scale-out strategy.
 
 ---
 
-## **11‑Glossary.md — Terminology Reference**
+### **11‑Glossary.md — Terminology Reference**
+
 A comprehensive glossary for:
+
 - Entities  
 - Events  
 - Plugins  
@@ -185,8 +212,10 @@ Useful for humans and AI agents.
 
 ---
 
-## **12‑AI-Agent-Guide.md — Operating Instructions for AI Agents**
+### **12‑AI-Agent-Guide.md — Operating Instructions for AI Agents**
+
 Explains:
+
 - How AI agents should interact with UEE  
 - Best practices for plugin generation  
 - Schema creation  
@@ -199,16 +228,18 @@ Makes UEE an AI‑native platform.
 
 ---
 
-## **13‑Overview-Index.md — (This File)**
+### **13‑Overview-Index.md — (This File)**
+
 You are here.
 
 A navigation hub for the entire documentation set.
 
 ---
 
-# 🧭 3. Recommended Reading Order
+## 🧭 3. Recommended Reading Order
 
 ### For **Non‑Technical Readers**
+
 1. 00‑Overview  
 2. 05‑Multitenancy  
 3. 09‑DomainExamples  
@@ -217,6 +248,7 @@ A navigation hub for the entire documentation set.
 6. 11‑Glossary  
 
 ### For **Developers**
+
 1. 00‑Overview  
 2. 01‑Architecture  
 3. 02‑Entities  
@@ -227,6 +259,7 @@ A navigation hub for the entire documentation set.
 8. 10‑Scalability  
 
 ### For **AI Agents**
+
 1. 00‑Overview  
 2. 12‑AI-Agent-Guide  
 3. 07‑API  
@@ -237,7 +270,7 @@ A navigation hub for the entire documentation set.
 
 ---
 
-# 🧠 4. Mental Map of the UEE Documentation Suite
+## 🧠 4. Mental Map of the UEE Documentation Suite
 
 ```mermaid
 graph TD
@@ -269,32 +302,39 @@ graph TD
 
 ---
 
-# 🔍 5. Document Interdependencies
+## 🔍 5. Document Interdependencies
 
-### Architecture (01) is the root.
+### Architecture (01) is the root
+
 All other documents depend on it.
 
 ### Entities (02), Event Sourcing (03), and Read Models (04)
+
 form the **core data pipeline**.
 
 ### API (07) and Plugins (06)
+
 form the **interaction and execution environment**.
 
 ### Telemetry (08) and AI Agent Guide (12)
+
 form the **intelligence layer**.
 
 ### Multitenancy (05) and Scalability (10)
+
 define the **SaaS capabilities**.
 
 ### Domain Examples (09)
+
 show **practical application**.
 
 ### Glossary (11)
+
 supports **all audiences**.
 
 ---
 
-# 🏁 6. Summary
+## 🏁 6. Summary
 
 This index ties together the entire UEE documentation suite.
 
